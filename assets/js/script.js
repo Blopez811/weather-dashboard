@@ -51,5 +51,17 @@ var getWeatherCity = function () {
         }).then(coord => getCurrentWeather(coord))
 }
 
+var getFiveDays = function() {
+    let apiUrl = "https://api.openweathermap.org/data/2.5/forecast?q=" + citySearchInput.value + "&appid=" + apiKey;
+    fetch(apiUrl)
+    .then(response => response.json())
+    .then( data => {
+        console.log(data, "this is what you need");
+        for(i=0; i<data.list.length; i++) {
+            console.log(data.list[i].dt_txt) 
+        }
+    }) 
+}
 citySearchBtn.addEventListener("click", getWeatherCity)
 // citySearchBtn.addEventListener("click", getCurrentWeather)
+citySearchBtn.addEventListener("click", getFiveDays);
