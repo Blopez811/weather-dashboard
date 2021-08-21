@@ -2,19 +2,34 @@ var apiKey = "456382b69ba78bc0d18ae825d9b6baff";
 var citySearchInput = document.querySelector("#citySearchInput");
 var citySearchBtn = document.querySelector("#citySearchBtn");
 var presentResultsEl = document.querySelector("#presentResults");
-// var getCurrentWeather = function () {
-//     var apiUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=33.44&lon=-94.04&exclude=hourly,daily&appid=" + apiKey;
-//     fetch(apiUrl)
-//     .then(response => response.json())
-//     .then(data => console.log(data));
-// }
+var getCurrentWeather = function (coord) {
+    let coordLat = coord.lat;
+    let coordLon = coord.lon;
+    var apiUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + coordLat + "&lon=" + coordLon + "&exclude=hourly,daily&appid=" + apiKey;
+    fetch(apiUrl)
+    .then(response => response.json())
+    .then(data => {
+     var uvi = data.current.uvi;
+     var uviEl = document.createElement("div");
+     uviEl.textContent = "UV Index: " + uvi   
+     presentResultsEl.appendChild(uviEl);
+    console.log(data)});
+}
 
 var getWeatherCity = function () {
-    var apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=Austin&appid=" + apiKey;
+    presentResultsEl.textContent = "";
+    console.log(citySearchInput.value);
+    var apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + citySearchInput.value + "&appid=" + apiKey;
     fetch(apiUrl)
         .then(response => response.json())
         .then(data => {
             console.log(data);
+            let currentDate = new Date().toLocaleDateString();
+            let currentCity = data.name
+            var currentCityEl = document.createElement("div");
+            currentCityEl.textContent = currentCity + " " + "(" + currentDate + ")";
+            presentResultsEl.appendChild(currentCityEl);
+
             var temp = data.main.temp;
             console.log(temp);
             var wind = data.wind.speed;
@@ -31,7 +46,10 @@ var getWeatherCity = function () {
             var humidityEl = document.createElement("div");
             humidityEl.textContent = "Humidity: " + humidity;
             presentResultsEl.appendChild(humidityEl);
-        });
+            let coord = data.coord;
+            return coord;
+        }).then(coord => getCurrentWeather(coord))
 }
 
 citySearchBtn.addEventListener("click", getWeatherCity)
+// citySearchBtn.addEventListener("click", getCurrentWeather)
