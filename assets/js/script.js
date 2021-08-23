@@ -81,15 +81,15 @@ var getWeatherCity = function () {
             var humidity = data.main.humidity
 
             var tempEl = document.createElement("div")
-            tempEl.textContent = "Temp: " + temp;
+            tempEl.textContent = "Temp: " + temp + "°F";
             presentResultsEl.appendChild(tempEl);
 
             var windEl = document.createElement("div");
-            windEl.textContent = "Wind: " + wind;
+            windEl.textContent = "Wind: " + wind + " MPH";
             presentResultsEl.appendChild(windEl);
 
             var humidityEl = document.createElement("div");
-            humidityEl.textContent = "Humidity: " + humidity;
+            humidityEl.textContent = "Humidity: " + humidity + " %";
             presentResultsEl.appendChild(humidityEl);
             let coord = data.coord;
             return coord;
@@ -116,7 +116,7 @@ var getFiveDays = function () {
                 dayOneTemp = Math.round(((dayOneTemp-273.15)*1.8)+32);
                 let dayOneWind = data.list[i].wind.speed;
                 let dayOneHumidity = data.list[i].main.humidity;
-                let dayOneText = dayOneDate + " " + "Temp: " + dayOneTemp + " " + "Wind: " + dayOneWind + " " + "Humidity: " + dayOneHumidity;
+                let dayOneText = dayOneDate + " " + "Temp: " + dayOneTemp + "°F" + " " + "Wind: " + dayOneWind + " MPH" + " " + "Humidity: " + dayOneHumidity + " %";
                 let dayOneEl = document.createElement("div");
                 dayOneEl.textContent = dayOneText;
                 futureResultsEl.appendChild(dayOneEl);
