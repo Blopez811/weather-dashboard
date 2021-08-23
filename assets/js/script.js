@@ -41,6 +41,14 @@ var getCurrentWeather = function (coord) {
             var uvi = data.current.uvi;
             var uviEl = document.createElement("div");
             uviEl.textContent = "UV Index: " + uvi
+            
+            if(uvi < 3) {
+                uviEl.style.backgroundColor = "green";
+            } else if(uvi > 3 & uvi < 6) {
+                uviEl.style.backgroundColor = "yellow";
+            } else if(uvi >= 6) {
+                uviEl.style.backgroundColor = "red"    
+            }
             presentResultsEl.appendChild(uviEl);
             console.log(data)
         });
@@ -63,7 +71,7 @@ var getWeatherCity = function () {
             let iconCode = data.weather[0].icon
             let icon = "https://openweathermap.org/img/wn/" + iconCode + ".png";
             iconEl = document.createElement("img");
-            iconEl.src=icon
+            iconEl.src = icon
             presentResultsEl.appendChild(iconEl);
 
             var temp = data.main.temp;
@@ -95,17 +103,22 @@ var getFiveDays = function () {
         .then(data => {
             console.log(data, "this is what you need");
 
-            //TODO write a for loop
+
             for (i = 3; i < data.list.length; i += 8) {
 
-                let dayOneDate = data.list[i].dt_txt
-                let dayOneTemp = data.list[i].main.temp
-                let dayOneWind = data.list[i].wind.speed
-                let dayOneHumidity = data.list[i].main.humidity
+                let dayOneDate = data.list[i].dt_txt;
+                let iconCode = data.list[i].weather[0].icon;
+                let icon = "https://openweathermap.org/img/wn/" + iconCode + ".png";
+                iconEl = document.createElement("img");
+                iconEl.src = icon
+                let dayOneTemp = data.list[i].main.temp;
+                let dayOneWind = data.list[i].wind.speed;
+                let dayOneHumidity = data.list[i].main.humidity;
                 let dayOneText = dayOneDate + " " + "Temp: " + dayOneTemp + " " + "Wind: " + dayOneWind + " " + "Humidity: " + dayOneHumidity;
                 let dayOneEl = document.createElement("div");
                 dayOneEl.textContent = dayOneText;
                 futureResultsEl.appendChild(dayOneEl);
+                futureResultsEl.appendChild(iconEl);
             }
         })
 }
