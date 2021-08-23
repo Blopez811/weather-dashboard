@@ -75,6 +75,7 @@ var getWeatherCity = function () {
             presentResultsEl.appendChild(iconEl);
 
             var temp = data.main.temp;
+            temp = Math.round(((temp-273.15)*1.8)+32);
             console.log(temp);
             var wind = data.wind.speed;
             var humidity = data.main.humidity
@@ -112,6 +113,7 @@ var getFiveDays = function () {
                 iconEl = document.createElement("img");
                 iconEl.src = icon
                 let dayOneTemp = data.list[i].main.temp;
+                dayOneTemp = Math.round(((dayOneTemp-273.15)*1.8)+32);
                 let dayOneWind = data.list[i].wind.speed;
                 let dayOneHumidity = data.list[i].main.humidity;
                 let dayOneText = dayOneDate + " " + "Temp: " + dayOneTemp + " " + "Wind: " + dayOneWind + " " + "Humidity: " + dayOneHumidity;
