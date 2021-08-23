@@ -60,6 +60,12 @@ var getWeatherCity = function () {
             currentCityEl.textContent = currentCity + " " + "(" + currentDate + ")";
             presentResultsEl.appendChild(currentCityEl);
 
+            let iconCode = data.weather[0].icon
+            let icon = "https://openweathermap.org/img/wn/" + iconCode + ".png";
+            iconEl = document.createElement("img");
+            iconEl.src=icon
+            presentResultsEl.appendChild(iconEl);
+
             var temp = data.main.temp;
             console.log(temp);
             var wind = data.wind.speed;
@@ -101,14 +107,6 @@ var getFiveDays = function () {
                 dayOneEl.textContent = dayOneText;
                 futureResultsEl.appendChild(dayOneEl);
             }
-
-
-
-            // console.log(data.list[4].main.temp);
-            // console.log(data.list[12].main.temp);
-            // console.log(data.list[20].main.temp)
-            // console.log(data.list[28].main.temp)
-            // console.log(data.list[36].main.temp)
         })
 }
 
@@ -119,6 +117,5 @@ var saveSearchHistory = function () {
     displayHistory();
 }
 citySearchBtn.addEventListener("click", getWeatherCity)
-// citySearchBtn.addEventListener("click", getCurrentWeather)
 citySearchBtn.addEventListener("click", getFiveDays);
 citySearchBtn.addEventListener("click", saveSearchHistory);
