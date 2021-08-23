@@ -7,13 +7,14 @@ var getCurrentWeather = function (coord) {
     let coordLon = coord.lon;
     var apiUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + coordLat + "&lon=" + coordLon + "&exclude=hourly,daily&appid=" + apiKey;
     fetch(apiUrl)
-    .then(response => response.json())
-    .then(data => {
-     var uvi = data.current.uvi;
-     var uviEl = document.createElement("div");
-     uviEl.textContent = "UV Index: " + uvi   
-     presentResultsEl.appendChild(uviEl);
-    console.log(data)});
+        .then(response => response.json())
+        .then(data => {
+            var uvi = data.current.uvi;
+            var uviEl = document.createElement("div");
+            uviEl.textContent = "UV Index: " + uvi
+            presentResultsEl.appendChild(uviEl);
+            console.log(data)
+        });
 }
 
 var getWeatherCity = function () {
@@ -51,16 +52,26 @@ var getWeatherCity = function () {
         }).then(coord => getCurrentWeather(coord))
 }
 
-var getFiveDays = function() {
+var getFiveDays = function () {
     let apiUrl = "https://api.openweathermap.org/data/2.5/forecast?q=" + citySearchInput.value + "&appid=" + apiKey;
     fetch(apiUrl)
-    .then(response => response.json())
-    .then( data => {
-        console.log(data, "this is what you need");
-        for(i=0; i<data.list.length; i++) {
-            console.log(data.list[i].dt_txt) 
-        }
-    }) 
+        .then(response => response.json())
+        .then(data => {
+            console.log(data, "this is what you need");
+            let dayOneDate = data.list[4].dt_txt
+            let dayOneTemp =  data.list[4].main.temp
+            let dayOneWind =  data.list[4].wind.speed
+            let dayOneHumidity = data.list[4].main.humidity 
+            let dayOneText = dayOneDate + " " + "Temp: " + dayOneTemp + " " + "Wind: " + dayOneWind + " " + "Humidity: " + dayOneHumidity;
+            console.log(dayOneText) 
+            
+            
+            // console.log(data.list[4].main.temp);
+            // console.log(data.list[12].main.temp);
+            // console.log(data.list[20].main.temp)
+            // console.log(data.list[28].main.temp)
+            // console.log(data.list[36].main.temp)
+        })
 }
 citySearchBtn.addEventListener("click", getWeatherCity)
 // citySearchBtn.addEventListener("click", getCurrentWeather)
